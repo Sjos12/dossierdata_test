@@ -35,7 +35,12 @@ class ContactController extends Controller
     public function update(Request $request)
     {
     }
-    public function delete(Request $request)
+    public function delete(Contact $contact, Request $request,)
     {
+        // If authentication system would be implementen, check if passed contact model belongs to  logged in user 
+        // if (Auth::user()->id !== $contact->user_id) return;
+
+        $contact->delete();
+        return redirect()->route('dashboard')->with(['message' => 'Succesfully deleted contact from ' . $contact->naam]);
     }
 }

@@ -19,6 +19,8 @@
             <th scope="col">Straat</th>
             <th scope="col">Postcode</th>
             <th scope="col">Plaats</th>
+            <th scope="col">Datum</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -29,11 +31,21 @@
             <td>{{ $contact->straat }}</td>
             <td>{{ $contact->postcode }}</td>
             <td>{{ $contact->plaats }}</td>
+            <td>{{ $contact->created_at }}</td>
+            <td>
+                <form action="{{ route('contacts.delete', $contact->uuid) }}" method="post"> @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn btn-danger ">
+                        <img src="/trash.svg" alt="Delete contact">
+                    </button>
+                </form>
+
+            </td>
         </tr>
         @endforeach
         @unless($contacts->isNotEmpty())
         <tr>
-            <th class="text-center" colspan="4">
+            <th class="text-center" colspan="5">
                 No entries yet
             </th>
         </tr>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Models\Contact;
 use Illuminate\Support\Facades\Route;
 
 /*
