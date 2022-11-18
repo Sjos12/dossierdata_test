@@ -35,5 +35,6 @@ Route::post('/contacts/create', [ContactController::class, 'create'])->name('con
 Route::get('/contacts/{contact:uuid}/read', [ContactController::class, 'read'])->name('contacts.read');
 
 Route::put('/contacts/{contact:uuid}/update', [ContactController::class, 'update'])->name('contacts.update');
+Route::get('/contacts/{contact:uuid}/update', [ContactController::class, 'update_index'])->name('contacts.update.index');
 
 Route::delete('/contacts/{contact:uuid}/delete', [ContactController::class, 'delete'])->name('contacts.delete');

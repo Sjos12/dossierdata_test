@@ -16,31 +16,47 @@ class ContactController extends Controller
     {
 
         $validatedData = $request->validate([
-            'naam' => 'required',
-            'straat' => 'required',
-            'postcode' => 'required',
-            'plaats' => 'required',
+            'naam' => 'required|string|min:3|max:255|unique:contacts,naam',
+            'straat' => 'required|string|min:3|max:255',
+            'postcode' => 'required|string|min:3|max:255',
+            'plaats' => 'required|string|min:3|max:255',
         ]);
 
-        // Mass assignablity is not a risk when properly validating request data
+        // Mass assignablity is not a vulnerability when properly validating request data
 
-        $contact = Contact::create($validatedData);
+        Contact::create($validatedData);
 
         return redirect()->route('dashboard')->with(['message' => 'Succesfully created a contact!']);
     }
-    public function read(Request $request, Contact $contact)
+    public function read(Contact $contact)
     {
-        return view('contacts.read');
+
+        return view('contacts.read', ['contact' => $contact]);
     }
-    public function update(Request $request)
+    public function update_index(Contact $contact)
     {
+        return view('contacts.update', ['contact' => $contact]);
     }
-    public function delete(Contact $contact, Request $request,)
+
+    public function update(Request $request, Contact $contact)
+    {
+
+        $validatedData = $request->validate([
+            'naam' => 'required|string|min:2|max:255',
+            'straat' => 'required|string|min:3|max:255',
+            'postcode' => 'required|string|min:3|max:255',
+            'plaats' => 'required|string|min:3|max:255',
+        ]);
+
+        $contact->update($validatedData);
+        return redirect()->route('contacts.read', $contact->uuid)->with('message', 'Succesfully updated your contact');
+    }
+    public function delete(Contact $contact)
     {
         // If authentication system would be implementen, check if passed contact model belongs to  logged in user 
         // if (Auth::user()->id !== $contact->user_id) return;
 
         $contact->delete();
-        return redirect()->route('dashboard')->with(['message' => 'Succesfully deleted contact from ' . $contact->naam]);
+        return redirect()->route('dashboard')->with(['message' => 'Succesfully deleted contact!']);
     }
 }

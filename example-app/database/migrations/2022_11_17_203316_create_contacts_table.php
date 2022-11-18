@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id('id');
-            $table->efficientUuid('uuid')->index();
+            $table->uuid('uuid')->index();
             $table->string('naam');
             $table->string('straat');
             $table->string('postcode');

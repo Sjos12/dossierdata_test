@@ -1,11 +1,27 @@
 @extends('layouts.app')
 @section('content')
-<h1>
-    Create a new contact
-</h1>
+<div class="d-flex gap-3 mb-3">
+    <a href="{{ route('dashboard')}}" class="btn btn-secondary my-auto">
+        Terug
+    </a>
+    <h1 class="">
+        Create a new contact
+    </h1>
+
+</div>
+
 
 <form action="{{ route('contacts.create') }}" method="post">
     @csrf
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Naam</label>
         <input type="text" class="form-control" name="naam" id="naam" aria-describedby="naam">
@@ -30,7 +46,10 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Create</button>
+    <div class="d-flex">
+        <button type="submit" class="btn btn-primary ms-auto">Create</button>
+    </div>
+
 
 </form>
 @endsection
